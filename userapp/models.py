@@ -6,7 +6,5 @@ from django.db.models.fields import UUIDField
 
 
 class CustomUser(AbstractUser):
-    uuid = UUIDField(primary_key=True)
+    uuid = UUIDField(primary_key=True, default=uuid4)
     email = models.EmailField(unique=True)
-    firstname = models.CharField(max_length=64)
-    lastname = models.CharField(max_length=64)
