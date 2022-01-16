@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 
 const MainMenu = () => {
@@ -11,4 +11,4 @@ const MainMenu = () => {
     )
 }
 
-export default MainMenu
+export default MainMenu;

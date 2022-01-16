@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 
 const UserItem = ({ user }) => {
@@ -41,4 +41,4 @@ const UserList = ({ users }) => {
 }
 
 
-export default UserList
+export default UserList;

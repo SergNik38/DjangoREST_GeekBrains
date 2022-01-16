@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import axios from 'axios'
-import UserList from './components/User.js'
-import MainMenu from './components/Menu.js'
-import Footer from './components/Footer.js'
+import axios from 'axios';
+import UserList from './components/User.js';
+import MainMenu from './components/Menu.js';
+import Footer from './components/Footer.js';
 
 
 class App extends React.Component {
