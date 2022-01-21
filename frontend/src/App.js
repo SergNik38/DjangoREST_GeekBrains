@@ -4,9 +4,8 @@ import axios from 'axios';
 import UserList from './components/User.js';
 import MainMenu from './components/Menu.js';
 import Footer from './components/Footer.js';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import ToDoList from './components/ToDo';
-import { Component } from 'react';
 import ProjectList from './components/Project';
 class App extends React.Component {
   constructor(props) {
@@ -17,17 +16,7 @@ class App extends React.Component {
       'projects': []
     }
   }
-  // componentDidMount() {
-  //   axios.get('http://127.0.0.1:8000/api/users')
-  //     .then(response => {
-  //       const users = response.data.results
-  //       this.setState(
-  //         {
-  //           'users': users
-  //         }
-  //       )
-  //     }).catch(error => console.log(error))
-  // }
+
   componentDidMount() {
     axios.get('http://127.0.0.1:8000/api/users')
       .then(response => {
@@ -67,9 +56,11 @@ class App extends React.Component {
               <MainMenu />
             </nav>
             <Routes>
-              <Route exact path='/' element={<UserList users={this.state.users} />} />
-              <Route exact path='/todos' element={<ToDoList todos={this.state.todos} />} />
-              <Route exact path='/projects' element={<ProjectList projects={this.state.projects} />} />
+              {/* Очень много из методички уже не работает после 5 версии роутера */}
+              <Route path='/users' element={<UserList users={this.state.users} />} />
+              <Route path='/todos' element={<ToDoList todos={this.state.todos} />} />
+              <Route path='/projects' element={<ProjectList projects={this.state.projects} />} />
+              <Route path='/' element={<Navigate replace to="/users" />} />
             </Routes>
           </div>
           <footer>
