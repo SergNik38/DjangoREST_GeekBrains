@@ -8,3 +8,6 @@ from django.db.models.fields import UUIDField
 class CustomUser(AbstractUser):
     uuid = UUIDField(primary_key=True, default=uuid4)
     email = models.EmailField(unique=True)
+
+    class Meta:
+        ordering = ['uuid']
