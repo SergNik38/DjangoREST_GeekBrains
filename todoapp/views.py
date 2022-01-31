@@ -6,7 +6,7 @@ from .models import Project, ToDo
 from .filters import ProjectFilter, ToDoFilter
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, permissions
 
 
 class ProjectLimitOffsetPagination(LimitOffsetPagination):
@@ -18,6 +18,7 @@ class ProjectViewSet(ModelViewSet):
     queryset = Project.objects.all()
     filterset_class = ProjectFilter
     pagination_class = ProjectLimitOffsetPagination
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class ToDoLimitOffsetPagination(LimitOffsetPagination):
@@ -29,6 +30,7 @@ class ToDoViewSet(ModelViewSet):
     queryset = ToDo.objects.all()
     filterset_class = ToDoFilter
     pagination_class = ToDoLimitOffsetPagination
+    permission_classes = [permissions.IsAuthenticated]
 
     def destroy(self, request, *args, **kwargs):
         """Получились какие-то дикие костыли (но работают), 
