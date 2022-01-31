@@ -7,7 +7,6 @@ const MainMenu = () => {
             <li><Link to='/'>Users</Link></li>
             <li><Link to='/todos'>ToDo</Link></li>
             <li><Link to='/projects'>Projects</Link></li>
-            <li>'AKSJDLASJDALKd'</li>
         </ul>
     )
 }

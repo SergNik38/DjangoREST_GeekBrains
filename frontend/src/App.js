@@ -100,7 +100,7 @@ class App extends React.Component {
           <div>
             <nav>
               <MainMenu />
-              <li>{this.is_authenticated() ? <button onClick={()=>this.logout()}>Logout</button> : <Link to='/login'>Login</Link>}</li>
+              {this.is_authenticated() ? <button onClick={()=>this.logout()}>Logout</button> : <Link to='/login'>Login</Link>}
             </nav>
             <Routes>
               <Route path='/users' element={<UserList users={this.state.users} />} />
