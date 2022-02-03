@@ -30,7 +30,7 @@ class ToDoViewSet(ModelViewSet):
     queryset = ToDo.objects.all()
     filterset_class = ToDoFilter
     pagination_class = ToDoLimitOffsetPagination
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def destroy(self, request, *args, **kwargs):
         """Получились какие-то дикие костыли (но работают), 
