@@ -26,11 +26,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "userapp",
-    "corsheaders",
-    "todoapp",
-    "django_filters",
+    'drf_yasg',
     'rest_framework.authtoken',
+    "django_filters",
+    "corsheaders",
+    # my_apps
+    "userapp",
+    "todoapp",
 ]
 
 # Auth model
@@ -134,7 +136,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-    ]
+    ],
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning',
+
 
 
 }
