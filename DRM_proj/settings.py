@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     "django_filters",
     "corsheaders",
+    "graphene_django",
     # my_apps
     "userapp",
     "todoapp",
@@ -141,4 +142,8 @@ REST_FRAMEWORK = {
 
 
 
+}
+
+GRAPHENE = {
+    "SCHEMA": "DRM_proj.schema.schema"
 }
