@@ -18,7 +18,7 @@ class ProjectViewSet(ModelViewSet):
     queryset = Project.objects.all()
     filterset_class = ProjectFilter
     pagination_class = ProjectLimitOffsetPagination
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 
 class ToDoLimitOffsetPagination(LimitOffsetPagination):
