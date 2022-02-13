@@ -10,8 +10,8 @@ import ProjectList from './components/Project';
 import Cookies from 'universal-cookie';
 import LoginForm from './components/Auth';
 import { Link } from 'react-router-dom';
-
-
+import ProjectForm from './components/projectForm';
+import ToDoForm from './components/todoForm';
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -61,6 +61,47 @@ class App extends React.Component {
     return headers
   }
 
+  deleteProject(url) {
+    const headers = this.get_headers()
+    axios.delete(`${url}`, {headers})
+    .then(response => {this.setState({projects: this.state.projects.filter((item) => item.url !== url)})})
+  }
+
+  deleteToDo(url) {
+    const headers = this.get_headers()
+    axios.delete(`${url}`, {headers})
+    .then(response => {this.setState({todos: this.state.todos.filter((item) => item.url !== url)})})
+  }
+
+  createProject(name, repository, users) {
+    const headers = this.get_headers()
+    const data = {name: name, repository: repository, users: Array(users)}
+    console.log(data)
+    axios.post(`http://127.0.0.1:8000/api/projects/`, data, {headers})
+        .then(response => {
+          let new_project = response.data
+          console.log(new_project)
+          const users = this.state.users.filter((item) => item.uuid === new_project.users)
+          new_project.users = users
+          this.setState({projects: [...this.state.projects, new_project]})
+          console.log(new_project)
+        }).catch(error => console.log(error))
+  }
+
+  createToDo(project, text, creator) {
+    const headers = this.get_headers()
+    const data = {project: project, text: text, creator: creator}
+    console.log(data)
+    axios.post(`http://127.0.0.1:8000/api/todos/`, data, {headers})
+        .then(response => {
+          let new_todo = response.data
+          const project = this.state.projects.filter((item) => item.url === new_todo.project)[0]
+          const creator = this.state.users.filter((item) => item.uuid === new_todo.user)[0]
+          new_todo.projcet = project
+          this.setState({todos: [...this.state.todos, new_todo]})
+          console.log(new_todo)
+        }).catch(error => console.log(error))
+  }
 
   load_data() {
     
@@ -104,8 +145,10 @@ class App extends React.Component {
             </nav>
             <Routes>
               <Route path='/users' element={<UserList users={this.state.users} />} />
-              <Route path='/todos' element={<ToDoList todos={this.state.todos} />} />
-              <Route path='/projects' element={<ProjectList projects={this.state.projects} />} />
+              <Route path='/todos' element={<ToDoList todos={this.state.todos} deleteToDo = {(id) => this.deleteToDo(id)}/>} />
+              <Route path='/projects' element={<ProjectList projects={this.state.projects} deleteProject = {(id) => this.deleteProject(id)}/>} />
+              <Route path='/projects/create' element={<ProjectForm users={this.state.users} createProject={(name, repository, users) => this.createProject(name, repository, users)}/>} />
+              <Route path='/todos/create' element={<ToDoForm users={this.state.users} projects = {this.state.projects}createToDo={(project, text, user) => this.createToDo(project, text, user)}/>} />
               <Route path='/' element={<Navigate replace to="/users" />} />
               <Route path='/login' element={<LoginForm get_token={(username, password) => this.get_token(username, password)} />} />
             </Routes>
