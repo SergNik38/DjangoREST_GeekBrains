@@ -44,7 +44,7 @@ class App extends React.Component {
   }
 
   get_token(username, password) {
-    axios.post('http://127.0.0.1:8000/api-token-auth/', {username: username, password: password})
+    axios.post('http://194.58.97.80:8000/api-token-auth/', {username: username, password: password})
     .then(response => {
         this.set_token(response.data['token'])
     }).catch(error => alert('Неверный логин или пароль'))
@@ -77,7 +77,7 @@ class App extends React.Component {
     const headers = this.get_headers()
     const data = {name: name, repository: repository, users: Array(users)}
     console.log(data)
-    axios.post(`http://127.0.0.1:8000/api/projects/`, data, {headers})
+    axios.post(`http://194.58.97.80:8000/api/projects/`, data, {headers})
         .then(response => {
           let new_project = response.data
           console.log(new_project)
@@ -92,7 +92,7 @@ class App extends React.Component {
     const headers = this.get_headers()
     const data = {project: project, text: text, creator: creator}
     console.log(data)
-    axios.post(`http://127.0.0.1:8000/api/todos/`, data, {headers})
+    axios.post(`http://194.58.97.80:8000/api/todos/`, data, {headers})
         .then(response => {
           let new_todo = response.data
           const project = this.state.projects.filter((item) => item.url === new_todo.project)[0]
@@ -106,13 +106,13 @@ class App extends React.Component {
   load_data() {
     
     const headers = this.get_headers()
-    axios.get('http://127.0.0.1:8000/api/users/', {headers})
+    axios.get('http://194.58.97.80:8000/api/users/', {headers})
         .then(response => {
             const users = response.data.results
             this.setState({users: users})
         }).catch(error => console.log(error))
 
-    axios.get('http://127.0.0.1:8000/api/projects/', {headers})
+    axios.get('http://194.58.97.80:8000/api/projects/', {headers})
         .then(response => {
             const projects = response.data.results
             this.setState({projects: projects})
@@ -120,7 +120,7 @@ class App extends React.Component {
           console.log(error)
           this.setState({projects: []})
         })
-    axios.get('http://127.0.0.1:8000/api/todos/', {headers})
+    axios.get('http://194.58.97.80:8000/api/todos/', {headers})
         .then(response => {
             const todos = response.data.results
             this.setState({todos: todos})

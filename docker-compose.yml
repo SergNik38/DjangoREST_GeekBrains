@@ -1,0 +1,39 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres:14.2
+    privileged: true
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_DB: DRM_proj
+  
+  backend:
+    build: 
+      context: ./DjangoREST_GeekBrains
+    expose: 
+      - 8080
+    command: bash -c "
+      ./wait-for-postgresql.sh db
+      && python manage.py makemigrations
+      && python manage.py migrate
+      && gunicorn DRM_proj.wsgi -b 0.0.0.0:8080"
+    depends_on:
+      - db
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 8000:80
+    depends_on:
+      - backend
+
+  frontend:
+    build: ./frontend
+    ports:
+      - 80:80
+    depends_on:
+      - nginx
